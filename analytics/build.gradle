@@ -1,3 +1,7 @@
+apply plugin: 'com.github.dcendents.android-maven'
+
+group='com.github.redmart.analytics-android'
+
 apply plugin: 'com.android.library'
 apply plugin: 'com.vanniktech.android.junit.jacoco'
 apply plugin: 'com.f2prateek.javafmt'
