@@ -7,7 +7,41 @@ apply plugin: 'com.vanniktech.android.junit.jacoco'
 apply plugin: 'com.f2prateek.javafmt'
 apply plugin: 'com.getkeepsafe.dexcount'
 
-apply from: rootProject.file('gradle/android.gradle')
+android {
+  compileSdkVersion rootProject.ext.compileSdkVersion
+  buildToolsVersion rootProject.ext.buildToolsVersion
+
+  defaultConfig {
+    minSdkVersion rootProject.ext.minSdkVersion
+    targetSdkVersion rootProject.ext.targetSdkVersion
+    versionCode rootProject.ext.versionCode
+    versionName rootProject.ext.versionName
+  }
+
+  packagingOptions {
+    exclude 'LICENSE.txt'
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+    }
+    debug {
+      testCoverageEnabled true
+    }
+  }
+
+  compileOptions {
+    sourceCompatibility rootProject.ext.sourceCompatibilityVersion
+    targetCompatibility rootProject.ext.targetCompatibilityVersion
+  }
+
+  lintOptions {
+    textReport true
+    textOutput 'stdout'
+    disable 'InvalidPackage', 'GradleCompatible'
+  }
+}
 
 dependencies {
   api rootProject.ext.deps.supportAnnotations
@@ -28,6 +62,3 @@ dependencies {
   //noinspection GradleDependency
   testImplementation 'org.assertj:assertj-core:1.7.1'
 }
-
-apply from: rootProject.file('gradle/attach-jar.gradle')
-apply from: rootProject.file('gradle/gradle-mvn-push.gradle')
